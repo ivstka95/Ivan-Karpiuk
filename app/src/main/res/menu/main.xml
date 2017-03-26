@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/USD"
+        android:orderInCategory="100"
+        android:title="USD"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/AUD"
+        android:orderInCategory="100"
+        android:title="AUD"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/CAD"
+        android:orderInCategory="100"
+        android:title="CAD"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/CZK"
+        android:orderInCategory="100"
+        android:title="CZK"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/DKK"
+        android:orderInCategory="100"
+        android:title="DKK"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/HUF"
+        android:orderInCategory="100"
+        android:title="HUF"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/ILS"
+        android:orderInCategory="100"
+        android:title="ILS"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/JPY"
+        android:orderInCategory="100"
+        android:title="JPY"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/LVL"
+        android:orderInCategory="100"
+        android:title="LVL"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/LTL"
+        android:orderInCategory="100"
+        android:title="LTL"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/NOK"
+        android:orderInCategory="100"
+        android:title="NOK"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/SKK"
+        android:orderInCategory="100"
+        android:title="SKK"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/PLZ"
+        android:orderInCategory="100"
+        android:title="PLZ"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/GEL"
+        android:orderInCategory="100"
+        android:title="GEL"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/EUR"
+        android:orderInCategory="100"
+        android:title="EUR"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/BYR"
+        android:orderInCategory="100"
+        android:title="BYR"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/GBP"
+        android:orderInCategory="100"
+        android:title="GBP"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/RUB"
+        android:orderInCategory="100"
+        android:title="RUB"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/CHF"
+        android:orderInCategory="100"
+        android:title="CHF"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/SEK"
+        android:orderInCategory="100"
+        android:title="SEK"
+        app:showAsAction="never" />
+</menu>
