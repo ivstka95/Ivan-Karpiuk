@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 
 public class RecyclerViewRatesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<ExchangeRate> currencyExchange = new ArrayList<>();
+    private List<ExchangeRate> currencyExchange = new ArrayList<>();
     private LayoutInflater inflater;
     private Context mContext;
     private int lastPosition;
@@ -64,9 +64,9 @@ public class RecyclerViewRatesAdapter extends RecyclerView.Adapter<RecyclerView.
 
 
     public void addCurrencyExchange(ExchangeRate exchangeRate) {
-        Log.e("Adapter got", exchangeRate.getCurrency());
         currencyExchange.clear();
         currencyExchange.add(exchangeRate);
+        Log.e("got rate to bind:", exchangeRate.getCurrency());
         notifyDataSetChanged();
     }
 

@@ -18,39 +18,46 @@ import android.view.View;
 import android.widget.CalendarView;
 
 import com.example.ivan.privatnews.Model.ExchangeRate;
+import com.example.ivan.privatnews.Presenter.App;
 import com.example.ivan.privatnews.Presenter.CurrencyExchangePresenter;
 import com.example.ivan.privatnews.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by karthik on 1/1/17.
  */
 
 public class CurrencyExchangeActivity extends AppCompatActivity implements CurrencyExchangeView {
+    @BindView(R.id.rvExchangeRates)
+    RecyclerView rvExchangeRates;
+    @BindView(R.id.toolbarExchangeRates)
+    Toolbar toolbar;
+    @Inject
+    CurrencyExchangePresenter currencyExchangePresenter;
 
-    private RecyclerView rvExchangeRates;
-    private CurrencyExchangePresenter currencyExchangePresenter;
-    private Toolbar toolbar;
     private RecyclerViewRatesAdapter recyclerViewRatesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appbar_withtabs_stays);
+        ButterKnife.bind(this);
+        App.getComponent().injectCurrencyExchange(this);
         recyclerViewRatesAdapter = new RecyclerViewRatesAdapter(this);
-        rvExchangeRates = (RecyclerView) findViewById(R.id.rvExchangeRates);
         rvExchangeRates.setLayoutManager(new LinearLayoutManager(this));
         rvExchangeRates.setItemAnimator(new DefaultItemAnimator());
         rvExchangeRates.setAdapter(recyclerViewRatesAdapter);
 
-        currencyExchangePresenter = new CurrencyExchangePresenter(this);
+        currencyExchangePresenter.bind(this);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbarExchangeRates);
         toolbar.setTitle("Currency exchange");
         setSupportActionBar(toolbar);
 
@@ -89,6 +96,12 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
     }
 
     @Override
+    protected void onDestroy() {
+        currencyExchangePresenter.unSubscribe();
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -106,7 +119,7 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
 
     @Override
     public void showExchangeRate(ExchangeRate exchangeRate) {
-        Log.e("View got", exchangeRate.getCurrency());
+        Log.e("got rate to show:", exchangeRate.getCurrency());
         recyclerViewRatesAdapter.addCurrencyExchange(exchangeRate);
     }
 

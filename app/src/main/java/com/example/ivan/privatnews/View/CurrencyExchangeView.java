@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface CurrencyExchangeView {
-    public void showExchangeRate(ExchangeRate exchangeRate);
+    public void showExchangeRate(ExchangeRate exchangeRates);
 
     public void setToolBarTitle(String toolBarTitle);
 }

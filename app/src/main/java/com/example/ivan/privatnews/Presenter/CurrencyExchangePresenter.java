@@ -2,12 +2,18 @@ package com.example.ivan.privatnews.Presenter;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.ivan.privatnews.Model.CurrencyExchange;
+import com.example.ivan.privatnews.Model.api.EspnAPI;
+import com.example.ivan.privatnews.Model.api.PrivatAPI;
 import com.example.ivan.privatnews.R;
 import com.example.ivan.privatnews.View.CurrencyExchangeView;
 
+import javax.inject.Inject;
+
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -18,41 +24,42 @@ import static rx.subscriptions.Subscriptions.from;
  */
 
 public class CurrencyExchangePresenter {
+    @Inject
+    PrivatAPI privatAPI;
     private String date = "";
     private String currency = "USD";
-    CurrencyExchangeView currencyExchangeView;
+    private CurrencyExchangeView currencyExchangeView;
+    private Subscription ratesSubscription;
+
+    public CurrencyExchangePresenter() {
+        App.getComponent().injectPrivatAPI(this);
+    }
 
     public void setDate(String date) {
         this.date = date;
     }
 
-    public CurrencyExchangePresenter(CurrencyExchangeView currencyExchangeView) {
+    public void bind(CurrencyExchangeView currencyExchangeView) {
         this.currencyExchangeView = currencyExchangeView;
     }
 
-    public void getExchangeRates() {
-        Observable<CurrencyExchange> rates = App.getPrivatAPI().getData(date);
+    public void unSubscribe() {
+        ratesSubscription.unsubscribe();
+    }
 
-        rates.map(currencyExchange -> currencyExchange.getExchangeRate())
+    public void getExchangeRates() {
+        Observable<CurrencyExchange> rates = privatAPI.getData(date);
+        ratesSubscription = rates.map(currencyExchange -> currencyExchange.getExchangeRate())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(exchangeRates -> Observable.from(exchangeRates))
-
                 .filter(exchangeRate -> exchangeRate.getCurrency().equals(currency))
-                .subscribe(exchangeRate -> {
-                    Log.e("found", exchangeRate.getCurrency());
-                    currencyExchangeView.showExchangeRate(exchangeRate);
-                });
-
-
-
-
+                .subscribe(exchangeRate -> currencyExchangeView.showExchangeRate(exchangeRate));
         currencyExchangeView.setToolBarTitle("Rates for: " + currency + " " + date);
     }
 
     public void onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.AUD) {
             currency = "AUD";
         }

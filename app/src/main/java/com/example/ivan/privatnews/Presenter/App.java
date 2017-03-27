@@ -1,14 +1,17 @@
 package com.example.ivan.privatnews.Presenter;
 
 import android.app.Application;
+import android.util.Log;
 
 
+import com.example.ivan.privatnews.DependeciesInjection.AppComponent;
+import com.example.ivan.privatnews.DependeciesInjection.DaggerAppComponent;
 import com.example.ivan.privatnews.Model.api.EspnAPI;
 import com.example.ivan.privatnews.Model.api.PrivatAPI;
 
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import javax.inject.Inject;
+
+
 
 /**
  * Created by misha on 31.10.2016.
@@ -16,35 +19,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
-    private static PrivatAPI privatAPI;
-    private Retrofit privatRetrofit;
-    private static EspnAPI espnAPI;
-    private Retrofit espnRetrofit;
-
     @Override
     public void onCreate() {
         super.onCreate();
-
-        privatRetrofit = new Retrofit.Builder()
-                .baseUrl("https://api.privatbank.ua/p24api/")
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        privatAPI = privatRetrofit.create(PrivatAPI.class);
-
-        espnRetrofit = new Retrofit.Builder()
-                .baseUrl("https://newsapi.org/v1/")
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        espnAPI = espnRetrofit.create(EspnAPI.class);
+        component = buildComponent();
+        Log.e(">>>>>>>>>>>>>>>>>", "onCreateApp");
     }
 
-    public static PrivatAPI getPrivatAPI() {
-        return privatAPI;
+    private static AppComponent component;
+
+    public static AppComponent getComponent() {
+        Log.e(">>>>>>>>>>>>>>>>>", "getAppComponentOutput = " + component);
+        return component;
     }
 
-    public static EspnAPI getEspnAPI() {
-        return espnAPI;
+
+    protected AppComponent buildComponent() {
+        Log.e(">>>>>>>>>>>>>>>>>", "buildAppComponent");
+        return DaggerAppComponent.builder()
+                .build();
     }
 }
