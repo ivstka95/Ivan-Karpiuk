@@ -1,27 +1,32 @@
 package com.example.ivan.privatnews.Presenter;
 
-import com.example.ivan.privatnews.View.BaseView;
+import android.support.annotation.NonNull;
+
+import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.MvpView;
 
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Ivan on 28.03.2017.
  */
 
-public class BasePresenter {
-    protected BaseView view;
-    Subscription subscription;
-    public void bind(BaseView baseView){
-        view = baseView;
+public class BasePresenter<View extends MvpView> extends MvpPresenter<View> {
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
+
+    protected void unsubscribeOnDestroy(@NonNull Subscription subscription) {
+        compositeSubscription.add(subscription);
     }
-    public void unBind(){
-        view = null;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeSubscription.clear();
     }
-    public void getData(){
+
+    public void getData() {
 
     }
 
-    public void unSubscribe(){
-        subscription.unsubscribe();
-    }
 }

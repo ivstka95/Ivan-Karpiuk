@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.ivan.privatnews.Model.Article;
 import com.example.ivan.privatnews.Presenter.App;
 import com.example.ivan.privatnews.Presenter.NewsPresenter;
@@ -19,13 +21,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NewsActivity extends AppCompatActivity implements NewsActivityView {
+public class NewsActivity extends MvpAppCompatActivity implements NewsActivityView {
     @BindView(R.id.rvNews)
     RecyclerView rvNews;
     @BindView(R.id.toolbarNews)
     Toolbar mToolbar;
     private RecyclerViewNewsAdapter recyclerViewNewsAdapter;
-    @Inject
+    @InjectPresenter
     NewsPresenter newsPresenter;
 
     @Override
@@ -41,15 +43,7 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityView 
         rvNews.setItemAnimator(new DefaultItemAnimator());
         rvNews.setAdapter(recyclerViewNewsAdapter);
 
-        newsPresenter.bind(this);
         newsPresenter.getData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        newsPresenter.unSubscribe();
-        newsPresenter.unBind();
-        super.onDestroy();
     }
 
     @Override
@@ -57,8 +51,4 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityView 
         recyclerViewNewsAdapter.showNews((List<Article>) articles);
     }
 
-    @Override
-    public void setToolBarTitle(String title) {
-
-    }
 }

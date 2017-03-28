@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 
+import com.arellomobile.mvp.MvpActivity;
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.ivan.privatnews.Model.ExchangeRate;
 import com.example.ivan.privatnews.Presenter.App;
 import com.example.ivan.privatnews.Presenter.CurrencyExchangePresenter;
@@ -34,12 +37,12 @@ import butterknife.ButterKnife;
  * Created by karthik on 1/1/17.
  */
 
-public class CurrencyExchangeActivity extends AppCompatActivity implements CurrencyExchangeView {
+public class CurrencyExchangeActivity extends MvpAppCompatActivity implements CurrencyExchangeView {
     @BindView(R.id.rvExchangeRates)
     RecyclerView rvExchangeRates;
     @BindView(R.id.toolbarExchangeRates)
     Toolbar toolbar;
-    @Inject
+    @InjectPresenter
     CurrencyExchangePresenter currencyExchangePresenter;
 
     private RecyclerViewRatesAdapter recyclerViewRatesAdapter;
@@ -54,8 +57,6 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
         rvExchangeRates.setLayoutManager(new LinearLayoutManager(this));
         rvExchangeRates.setItemAnimator(new DefaultItemAnimator());
         rvExchangeRates.setAdapter(recyclerViewRatesAdapter);
-
-        currencyExchangePresenter.bind(this);
 
         toolbar.setTitle("Currency exchange");
         setSupportActionBar(toolbar);
@@ -94,12 +95,6 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    protected void onDestroy() {
-        currencyExchangePresenter.unSubscribe();
-        currencyExchangePresenter.unBind();
-        super.onDestroy();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

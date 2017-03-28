@@ -1,14 +1,11 @@
 package com.example.ivan.privatnews.Presenter;
 
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.arellomobile.mvp.InjectViewState;
 import com.example.ivan.privatnews.Model.CurrencyExchange;
-import com.example.ivan.privatnews.Model.api.EspnAPI;
 import com.example.ivan.privatnews.Model.api.PrivatAPI;
 import com.example.ivan.privatnews.R;
-import com.example.ivan.privatnews.View.BaseView;
 import com.example.ivan.privatnews.View.CurrencyExchangeView;
 
 import javax.inject.Inject;
@@ -23,8 +20,8 @@ import static rx.subscriptions.Subscriptions.from;
 /**
  * Created by Ivan on 25.03.2017.
  */
-
-public class CurrencyExchangePresenter extends BasePresenter {
+@InjectViewState
+public class CurrencyExchangePresenter extends BasePresenter<CurrencyExchangeView> {
     @Inject
     PrivatAPI privatAPI;
     private String date = "";
@@ -41,13 +38,15 @@ public class CurrencyExchangePresenter extends BasePresenter {
     @Override
     public void getData() {
         Observable<CurrencyExchange> rates = privatAPI.getData(date);
-        subscription = rates.map(currencyExchange -> currencyExchange.getExchangeRate())
+
+        Subscription subscription = rates.map(currencyExchange -> currencyExchange.getExchangeRate())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(exchangeRates -> Observable.from(exchangeRates))
                 .filter(exchangeRate -> exchangeRate.getCurrency().equals(currency))
-                .subscribe(exchangeRate -> view.showData(exchangeRate));
-        view.setToolBarTitle("Rates for: " + currency + " " + date);
+                .subscribe(exchangeRate -> getViewState().showData(exchangeRate));
+        unsubscribeOnDestroy(subscription);
+        getViewState().setToolBarTitle("Rates for: " + currency + " " + date);
     }
 
     public void onOptionsItemSelected(MenuItem item) {
@@ -112,6 +111,6 @@ public class CurrencyExchangePresenter extends BasePresenter {
         if (id == R.id.PLZ) {
             currency = "PLZ";
         }
-        view.setToolBarTitle("Rates for: " + currency + " " + date);
+        getViewState().setToolBarTitle("Rates for: " + currency + " " + date);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.ivan.privatnews.View;
 
+import com.arellomobile.mvp.MvpView;
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.example.ivan.privatnews.Model.Article;
 
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.List;
 /**
  * Created by Ivan on 25.03.2017.
  */
-
-public interface NewsActivityView extends BaseView{
+@StateStrategyType(AddToEndSingleStrategy.class)
+public interface NewsActivityView extends MvpView{
+    void showData(Object object);
 }
