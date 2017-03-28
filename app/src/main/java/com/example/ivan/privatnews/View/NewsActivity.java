@@ -42,17 +42,23 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityView 
         rvNews.setAdapter(recyclerViewNewsAdapter);
 
         newsPresenter.bind(this);
-        newsPresenter.getNews();
+        newsPresenter.getData();
     }
 
     @Override
     protected void onDestroy() {
         newsPresenter.unSubscribe();
+        newsPresenter.unBind();
         super.onDestroy();
     }
 
     @Override
-    public void showNews(List<Article> articles) {
-        recyclerViewNewsAdapter.showNews(articles);
+    public void showData(Object articles) {
+        recyclerViewNewsAdapter.showNews((List<Article>) articles);
+    }
+
+    @Override
+    public void setToolBarTitle(String title) {
+
     }
 }

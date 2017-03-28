@@ -9,8 +9,6 @@ import java.util.List;
  * Created by Ivan on 25.03.2017.
  */
 
-public interface CurrencyExchangeView {
-    public void showExchangeRate(ExchangeRate exchangeRates);
+public interface CurrencyExchangeView extends BaseView {
 
-    public void setToolBarTitle(String toolBarTitle);
 }

@@ -8,6 +8,5 @@ import java.util.List;
  * Created by Ivan on 25.03.2017.
  */
 
-public interface NewsActivityView {
-    public void showNews(List<Article> articles);
+public interface NewsActivityView extends BaseView{
 }

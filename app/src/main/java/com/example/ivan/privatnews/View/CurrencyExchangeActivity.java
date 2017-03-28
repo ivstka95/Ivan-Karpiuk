@@ -11,7 +11,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,7 +81,7 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
                         .setPositiveButton("Get", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        currencyExchangePresenter.getExchangeRates();
+                                        currencyExchangePresenter.getData();
                                     }
                                 }
                         );
@@ -98,6 +97,7 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
     @Override
     protected void onDestroy() {
         currencyExchangePresenter.unSubscribe();
+        currencyExchangePresenter.unBind();
         super.onDestroy();
     }
 
@@ -118,9 +118,8 @@ public class CurrencyExchangeActivity extends AppCompatActivity implements Curre
     }
 
     @Override
-    public void showExchangeRate(ExchangeRate exchangeRate) {
-        Log.e("got rate to show:", exchangeRate.getCurrency());
-        recyclerViewRatesAdapter.addCurrencyExchange(exchangeRate);
+    public void showData(Object exchangeRate) {
+        recyclerViewRatesAdapter.addCurrencyExchange((ExchangeRate) exchangeRate);
     }
 
     @Override
