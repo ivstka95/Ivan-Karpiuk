@@ -21,7 +21,7 @@ public class RESTModule {
 
     @Provides
     @NonNull
-    @Singleton
+    @RESTScope
     public PrivatAPI providePrivatAPI() {
         Retrofit privatRetrofit = new Retrofit.Builder()
                 .baseUrl("https://api.privatbank.ua/p24api/")
@@ -34,7 +34,7 @@ public class RESTModule {
 
     @Provides
     @NonNull
-    @Singleton
+    @RESTScope
     public EspnAPI provideEspnAPI() {
         Retrofit espnRetrofit = new Retrofit.Builder()
                 .baseUrl("https://newsapi.org/v1/")

@@ -1,4 +1,4 @@
-package com.example.ivan.privatnews.View;
+package com.example.ivan.privatnews.View.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.ivan.privatnews.Model.Article;
 import com.example.ivan.privatnews.R;
+import com.example.ivan.privatnews.View.Activities.ArticleActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

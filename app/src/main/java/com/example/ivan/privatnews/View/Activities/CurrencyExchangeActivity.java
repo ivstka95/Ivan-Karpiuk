@@ -1,4 +1,4 @@
-package com.example.ivan.privatnews.View;
+package com.example.ivan.privatnews.View.Activities;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,19 +15,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 
-import com.arellomobile.mvp.MvpActivity;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.example.ivan.privatnews.Model.ExchangeRate;
 import com.example.ivan.privatnews.Presenter.App;
 import com.example.ivan.privatnews.Presenter.CurrencyExchangePresenter;
 import com.example.ivan.privatnews.R;
+import com.example.ivan.privatnews.View.Views.CurrencyExchangeView;
+import com.example.ivan.privatnews.View.Adapters.RecyclerViewRatesAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

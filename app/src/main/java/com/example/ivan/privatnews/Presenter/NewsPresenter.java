@@ -4,7 +4,7 @@ package com.example.ivan.privatnews.Presenter;
 import com.arellomobile.mvp.InjectViewState;
 import com.example.ivan.privatnews.Model.News;
 import com.example.ivan.privatnews.Model.api.EspnAPI;
-import com.example.ivan.privatnews.View.NewsActivityView;
+import com.example.ivan.privatnews.View.Views.NewsActivityView;
 
 import javax.inject.Inject;
 
@@ -22,8 +22,15 @@ public class NewsPresenter extends BasePresenter<NewsActivityView> {
     @Inject
     EspnAPI espnAPI;
 
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        getViewState().setUpUi();
+        getData();
+    }
+
     public NewsPresenter() {
-        App.getComponent().injectEspnAPI(this);
+        App.plusRESTComponent().injectEspnAPI(this);
     }
 
     @Override
@@ -33,5 +40,6 @@ public class NewsPresenter extends BasePresenter<NewsActivityView> {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(articles -> getViewState().showData(articles));
+        unsubscribeOnDestroy(subscription);
     }
 }

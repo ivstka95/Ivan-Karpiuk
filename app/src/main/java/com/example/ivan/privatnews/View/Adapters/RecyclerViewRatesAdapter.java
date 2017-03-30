@@ -1,4 +1,4 @@
-package com.example.ivan.privatnews.View;
+package com.example.ivan.privatnews.View.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

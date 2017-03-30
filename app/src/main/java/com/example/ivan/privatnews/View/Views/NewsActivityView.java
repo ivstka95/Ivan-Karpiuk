@@ -1,4 +1,4 @@
-package com.example.ivan.privatnews.View;
+package com.example.ivan.privatnews.View.Views;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
@@ -13,4 +13,5 @@ import java.util.List;
 @StateStrategyType(AddToEndSingleStrategy.class)
 public interface NewsActivityView extends MvpView{
     void showData(Object object);
+    void setUpUi();
 }

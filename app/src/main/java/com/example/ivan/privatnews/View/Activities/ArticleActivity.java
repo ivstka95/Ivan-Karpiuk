@@ -1,4 +1,4 @@
-package com.example.ivan.privatnews.View;
+package com.example.ivan.privatnews.View.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;

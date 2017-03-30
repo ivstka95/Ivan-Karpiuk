@@ -1,7 +1,6 @@
-package com.example.ivan.privatnews.View;
+package com.example.ivan.privatnews.View.Activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +12,10 @@ import com.example.ivan.privatnews.Model.Article;
 import com.example.ivan.privatnews.Presenter.App;
 import com.example.ivan.privatnews.Presenter.NewsPresenter;
 import com.example.ivan.privatnews.R;
+import com.example.ivan.privatnews.View.Views.NewsActivityView;
+import com.example.ivan.privatnews.View.Adapters.RecyclerViewNewsAdapter;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,19 +35,25 @@ public class NewsActivity extends MvpAppCompatActivity implements NewsActivityVi
         setContentView(R.layout.activity_news);
         ButterKnife.bind(this);
         App.getComponent().injectNews(this);
-        mToolbar.setTitle("ESPN sport news");
-        setSupportActionBar(mToolbar);
-        recyclerViewNewsAdapter = new RecyclerViewNewsAdapter(this);
-        rvNews.setLayoutManager(new LinearLayoutManager(this));
-        rvNews.setItemAnimator(new DefaultItemAnimator());
-        rvNews.setAdapter(recyclerViewNewsAdapter);
 
-        newsPresenter.getData();
+
+
     }
 
     @Override
     public void showData(Object articles) {
         recyclerViewNewsAdapter.showNews((List<Article>) articles);
     }
+
+    @Override
+    public void setUpUi() {
+        mToolbar.setTitle("ESPN sport news");
+        setSupportActionBar(mToolbar);
+        recyclerViewNewsAdapter = new RecyclerViewNewsAdapter(this);
+        rvNews.setLayoutManager(new LinearLayoutManager(this));
+        rvNews.setItemAnimator(new DefaultItemAnimator());
+        rvNews.setAdapter(recyclerViewNewsAdapter);
+    }
+
 
 }

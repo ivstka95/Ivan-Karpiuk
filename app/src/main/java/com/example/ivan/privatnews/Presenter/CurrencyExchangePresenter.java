@@ -6,7 +6,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.example.ivan.privatnews.Model.CurrencyExchange;
 import com.example.ivan.privatnews.Model.api.PrivatAPI;
 import com.example.ivan.privatnews.R;
-import com.example.ivan.privatnews.View.CurrencyExchangeView;
+import com.example.ivan.privatnews.View.Views.CurrencyExchangeView;
 
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ public class CurrencyExchangePresenter extends BasePresenter<CurrencyExchangeVie
     private String currency = "USD";
 
     public CurrencyExchangePresenter() {
-        App.getComponent().injectPrivatAPI(this);
+        App.plusRESTComponent().injectPrivatAPI(this);
     }
 
     public void setDate(String date) {
